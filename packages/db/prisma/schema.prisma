@@ -1,0 +1,51 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id String @id @default(uuid())
+  email String @unique
+  password String
+}
+
+enum Role {
+  User
+  Admin
+}
+
+model Contest {
+  id String @id @default(uuid())
+  title String
+  startTime DateTime
+}
+
+model ContestToChallengeMapping {
+  id String @id @default(uuid())
+  contestId String
+  challengeId String
+  index Int
+}
+
+model Challenge {
+  id String @id @default(uuid())
+  title String
+  notionDocId String
+  contestId String
+  maxPoints Int
+}
+
+model Submission {
+  id String @id @default(uuid())
+  contestId String
+  challengeId String
+}
